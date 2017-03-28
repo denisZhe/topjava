@@ -1,0 +1,15 @@
+.normal {
+    color: green;
+}
+
+.exceeded {
+    color: red;
+}
+
+a:link, a:visited {
+    color: #006cb5;
+}
+
+a:hover {
+    color: #ff0030;
+}
