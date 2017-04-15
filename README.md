@@ -1,3 +1,7 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0bbf846ff84c4ea0bfab1233bdd69707)](https://www.codacy.com/app/denisZhe/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=denisZhe/topjava&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/denisZhe/topjava.svg?branch=master)](https://travis-ci.org/denisZhe/topjava)
+[![Dependency Status](https://dependencyci.com/github/denisZhe/topjava/badge)](https://dependencyci.com/github/denisZhe/topjava)
+
 Java Enterprise Online Project 
 ===============================
 Наиболее востребованные технологии /инструменты / фреймворки Java Enterprise:
