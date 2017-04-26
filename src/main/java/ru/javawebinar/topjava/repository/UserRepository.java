@@ -17,4 +17,10 @@ public interface UserRepository {
     User getByEmail(String email);
 
     List<User> getAll();
+
+    // null if not found
+    // load meals only in data-jpa
+    default User getWithMeals(int id) {
+        return get(id);
+    }
 }

@@ -25,4 +25,13 @@
         <url-pattern>/meals</url-pattern>
     </servlet-mapping>
 
+    <context-param>
+        <param-name>spring.profiles.active.db</param-name>
+        <param-value>postgres</param-value>
+    </context-param>
+    <context-param>
+        <param-name>spring.profiles.active.repo</param-name>
+        <param-value>jpa</param-value>
+    </context-param>
+
 </web-app>

@@ -24,4 +24,11 @@ public interface MealRepository {
 
     // ORDERED dateTime
     List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
+
+    // null if meal do not belong to userId
+    // null if not found
+    // load user only in data-jpa
+    default Meal getWithUser(int id, int userId) {
+        return get(id, userId);
+    }
 }
