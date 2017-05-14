@@ -13,6 +13,7 @@ import javax.persistence.*;
 
 // http://stackoverflow.com/questions/594597/hibernate-annotations-which-is-better-field-or-property-access
 @Access(AccessType.FIELD)
+//@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 public class BaseEntity implements Persistable<Integer> {
     public static final int START_SEQ = 100000;
 
