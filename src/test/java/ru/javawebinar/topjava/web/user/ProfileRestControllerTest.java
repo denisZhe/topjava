@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web.user;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import ru.javawebinar.topjava.TestUtil;
@@ -18,6 +19,17 @@ import static ru.javawebinar.topjava.UserTestData.*;
 import static ru.javawebinar.topjava.web.user.ProfileRestController.REST_URL;
 
 public class ProfileRestControllerTest extends AbstractControllerTest {
+
+    @Override
+    @Before
+    public void setUp() {
+        super.setUp();
+        try {
+            mockMvc.perform(post("/users").param("userId", String.valueOf(USER_ID)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void testGet() throws Exception {
