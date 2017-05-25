@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.web.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
@@ -41,6 +42,13 @@ public class AdminAjaxController extends AbstractUserController {
             super.create(user);
         } else {
             super.update(user, id);
+        }
+    }
+
+    @PostMapping("/{id}")
+    public void activeChange(@PathVariable("id") int id, @RequestParam("enabled") String enabled) {
+        if (!StringUtils.isEmpty(enabled)) {
+            service.activeChange(id, Boolean.parseBoolean(enabled));
         }
     }
 }

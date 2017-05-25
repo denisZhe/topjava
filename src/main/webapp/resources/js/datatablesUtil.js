@@ -1,8 +1,4 @@
 function makeEditable() {
-    $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
-    });
-
     $('#detailsForm').submit(function () {
         save();
         return false;
@@ -20,7 +16,7 @@ function add() {
 
 function deleteRow(id) {
     $.ajax({
-        url: ajaxUrl + id,
+        url: mainAjaxUrl + id,
         type: 'DELETE',
         success: function () {
             updateTable();
@@ -43,7 +39,7 @@ function save() {
     var form = $('#detailsForm');
     $.ajax({
         type: "POST",
-        url: ajaxUrl,
+        url: mainAjaxUrl,
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');

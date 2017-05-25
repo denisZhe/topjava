@@ -19,8 +19,10 @@ public interface UserService {
     List<User> getAll();
 
     void update(User user);
-    
+
     void evictCache();
 
     User getWithMeals(int id);
+
+    void activeChange(int id, Boolean enabled) throws NotFoundException;
 }
