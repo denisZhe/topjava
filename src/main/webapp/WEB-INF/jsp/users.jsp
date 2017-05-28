@@ -32,25 +32,6 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <c:forEach items="${users}" var="user">
-                        <jsp:useBean id="user" scope="page" type="ru.javawebinar.topjava.model.User"/>
-                        <tr class="${user.enabled ? '' : 'disabled'}">
-                            <td><c:out value="${user.name}"/></td>
-                            <td><a href="mailto:${user.email}">${user.email}</a></td>
-                            <td>${user.roles}</td>
-                            <td>
-                                <input type="checkbox"
-                                       <c:if test="${user.enabled}">checked</c:if> onclick="enable($(this), ${user.id})"/>
-                            </td>
-                            <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
-                            <td><a>
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a></td>
-                            <td><a onclick="deleteRow(${user.id})">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </a></td>
-                        </tr>
-                    </c:forEach>
                 </table>
             </div>
         </div>
@@ -63,7 +44,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"><spring:message code="users.add"/></h2>
+                <h2 class="modal-title" id="modalTitle"></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
@@ -106,4 +87,13 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    var i18n = [];
+    i18n["addTitle"] = '<spring:message code="users.add"/>';
+    i18n["editTitle"] = '<spring:message code="users.edit"/>';
+
+    <c:forEach var='key' items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.errorStatus"}%>'>
+    i18n['${key}'] = '<spring:message code="${key}"/>';
+    </c:forEach>
+</script>
 </html>
