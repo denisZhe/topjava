@@ -6,7 +6,7 @@ function makeEditable() {
         failNoty(jqXHR);
     });
     // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
-    $.ajaxSetup({ cache: false });
+    $.ajaxSetup({cache: false});
 }
 
 function add() {
@@ -21,6 +21,11 @@ function updateRow(id) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
+        var dateTimeInput = $("#dateTime");
+        if (dateTimeInput.length) {
+            var dateTime = dateTimeInput.val().replace('T', ' ').substring(0, 16);
+            dateTimeInput.val(dateTime);
+        }
         $('#editRow').modal();
     });
 }
@@ -41,6 +46,12 @@ function updateTableByData(data) {
 }
 
 function save() {
+    var dateTimeInput = $("#dateTime");
+    if (dateTimeInput.length) {
+        var dateTime = dateTimeInput.val().replace(' ', 'T');
+        dateTimeInput.val(dateTime);
+    }
+
     $.ajax({
         type: "POST",
         url: ajaxUrl,
@@ -90,7 +101,7 @@ function renderEditBtn(data, type, row) {
 
 function renderDeleteBtn(data, type, row) {
     if (type === 'display') {
-        return '<a onclick="deleteRow(' + row.id + ');">'+
+        return '<a onclick="deleteRow(' + row.id + ');">' +
             '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
     }
 }
