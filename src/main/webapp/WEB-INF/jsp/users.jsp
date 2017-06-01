@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -11,34 +12,28 @@
 
 <div class="jumbotron">
     <div class="container">
-        <div class="shadow">
-            <h3><spring:message code="users.title"/></h3>
-            <br/>
-            <div class="view-box">
-                <a class="btn btn-primary" onclick="add()">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <spring:message code="common.add"/>
-                </a>
+        <h3><spring:message code="users.title"/></h3>
+        <br/>
+        <a class="btn btn-primary" onclick="add()">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <spring:message code="common.add"/>
+        </a>
 
-                <table class="table table-striped display" id="datatable">
-                    <thead>
-                    <tr>
-                        <th><spring:message code="users.name"/></th>
-                        <th><spring:message code="users.email"/></th>
-                        <th><spring:message code="users.roles"/></th>
-                        <th><spring:message code="users.active"/></th>
-                        <th><spring:message code="users.registered"/></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
+        <table class="table table-striped display" id="datatable">
+            <thead>
+            <tr>
+                <th><spring:message code="users.name"/></th>
+                <th><spring:message code="users.email"/></th>
+                <th><spring:message code="users.roles"/></th>
+                <th><spring:message code="users.active"/></th>
+                <th><spring:message code="users.registered"/></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
     </div>
 </div>
-<jsp:include page="fragments/footer.jsp"/>
-
 <div class="modal fade" id="editRow">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -86,14 +81,11 @@
         </div>
     </div>
 </div>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
+<jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    var i18n = [];
     i18n["addTitle"] = '<spring:message code="users.add"/>';
     i18n["editTitle"] = '<spring:message code="users.edit"/>';
-
-    <c:forEach var='key' items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.errorStatus"}%>'>
-    i18n['${key}'] = '<spring:message code="${key}"/>';
-    </c:forEach>
 </script>
 </html>
