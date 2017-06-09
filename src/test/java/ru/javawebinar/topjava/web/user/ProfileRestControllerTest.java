@@ -2,6 +2,8 @@ package ru.javawebinar.topjava.web.user;
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.UserTo;
@@ -55,5 +57,17 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk());
 
         MATCHER.assertEquals(UserUtil.updateFromTo(new User(USER), updatedTo), userService.getByEmail("newemail@ya.ru"));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    public void testDuplicateForUpdate() throws Exception {
+        UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword", 1500);
+
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andDo(print())
+                .andExpect(status().isConflict());
     }
 }

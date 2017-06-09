@@ -10,17 +10,28 @@
     <div class="container">
         <div class="navbar-header navbar-brand"><spring:message code="app.title"/></div>
         <div class="navbar-collapse collapse">
-            <form:form class="navbar-form navbar-right" role="form" action="spring_security_check" method="post">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control" name="username">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control" name="password">
-                </div>
-                <button type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                </button>
-            </form:form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form:form class="navbar-form" role="form" action="spring_security_check" method="post">
+                        <div class="form-group">
+                            <input type="text" placeholder="Email" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control" name="password">
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                        </button>
+                    </form:form>
+                </li>
+                <li class="dropdown">
+                    <a href="#" id="locale" class="dropdown-toggle" data-toggle="dropdown">${pageContext.response.locale}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="en" href="">English</a></li>
+                        <li><a id="ru" href="">Русский</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
@@ -93,5 +104,6 @@
         $('input[name="password"]').val(password);
     }
 </script>
+<script type="text/javascript" src="resources/js/pathResolverForLocale.js"></script>
 </body>
 </html>

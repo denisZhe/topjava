@@ -3,6 +3,8 @@ package ru.javawebinar.topjava.web.user;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
@@ -29,7 +31,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
-        // https://jira.spring.io/browse/SPR-14472
+                // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentMatcher(ADMIN));
     }
@@ -96,6 +98,19 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NEVER)
+    public void testDuplicateForUpdate() throws Exception {
+        User updated = new User(USER);
+        updated.setEmail(ADMIN.getEmail());
+
+        mockMvc.perform(put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
     public void testCreate() throws Exception {
         User expected = new User(null, "New", "new@gmail.com", "newPass", 2300, Role.ROLE_USER, Role.ROLE_ADMIN);
         ResultActions action = mockMvc.perform(post(REST_URL)
@@ -108,6 +123,17 @@ public class AdminRestControllerTest extends AbstractControllerTest {
 
         MATCHER.assertEquals(expected, returned);
         MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, expected, USER), userService.getAll());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    public void testDuplicateForCreate() throws Exception {
+        User created = new User(null, "New", ADMIN.getEmail(), "newPass", 2300, Role.ROLE_USER, Role.ROLE_ADMIN);
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(created)))
+                .andExpect(status().isConflict());
     }
 
     @Test

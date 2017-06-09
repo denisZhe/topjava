@@ -10,4 +10,10 @@ public class ErrorInfo {
         this.cause = ex.getClass().getSimpleName();
         this.detail = ex.getLocalizedMessage();
     }
+
+    public ErrorInfo(CharSequence url, Throwable ex, String detail) {
+        this.url = url.toString();
+        this.cause = ex.getClass().getSimpleName();
+        this.detail = detail;
+    }
 }
