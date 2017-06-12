@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.ValidationUtil;
+import ru.javawebinar.topjava.util.exception.ApplicationException;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -49,6 +50,12 @@ public class ExceptionInfoHandler {
         return logAndGetValidationErrorInfo(req, result);
     }
 
+    @ExceptionHandler(ApplicationException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorInfo> applicationError(HttpServletRequest req, ApplicationException appEx) {
+        return getErrorInfoResponseEntity(req, appEx, appEx.getMsgCode(), appEx.getHttpStatus());
+    }
+
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
@@ -63,9 +70,9 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, true);
     }
 
-    private static ErrorInfo logAndGetValidationErrorInfo(HttpServletRequest req, BindingResult result) {
-        String[] details = result.getFieldErrors().stream()
-                .map(fe -> fe.getField() + ' ' + fe.getDefaultMessage())
+    private ErrorInfo logAndGetValidationErrorInfo(HttpServletRequest req, BindingResult result) {
+        String[] details = result.getAllErrors().stream()
+                .map(fe -> messageUtil.getMessage(fe))
                 .toArray(String[]::new);
 
         return logAndGetErrorInfo(req, "ValidationException", details);
